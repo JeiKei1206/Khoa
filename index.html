@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khoa</title>
+    <title>Valentine - K</title>
     <style>
         body {
             display: flex;
@@ -74,18 +74,17 @@
         const messages = ["abc", "def"];
         const messageElement = document.getElementById("message");
 
-        // ⏳ Chỉnh thời gian hiển thị chữ ở đây
         const abc_duration = 3000; // Thời gian "abc" hiển thị (ms)
         const transition_duration = 1000; // Thời gian chuyển đổi giữa abc và def (ms)
 
         function showMessages() {
             messageElement.style.opacity = 1;
-            messageElement.innerText = messages[0]; // Hiện chữ "abc"
+            messageElement.innerText = messages[0];
 
             messageTimeout = setTimeout(() => {
                 messageElement.style.opacity = 0;
                 setTimeout(() => {
-                    messageElement.innerText = messages[1]; // Chuyển sang "def"
+                    messageElement.innerText = messages[1];
                     messageElement.style.opacity = 1;
                 }, transition_duration);
             }, abc_duration);
@@ -94,13 +93,13 @@
         function checkProximity() {
             const V_position = localStorage.getItem("V_position");
             if (V_position) {
-                const distance = window.screenLeft - parseInt(L_position);
+                const distance = window.screenLeft - parseInt(V_position);
                 if (Math.abs(distance) < 150) {
                     document.body.style.backgroundColor = "#ffccd5";
                     document.querySelector(".letter").style.display = "none";
                     document.querySelector(".heart").style.display = "block";
 
-                    if (!messageTimeout) showMessages(); // Chỉ chạy một lần
+                    if (!messageTimeout) showMessages();
                 } else {
                     document.body.style.backgroundColor = "#ffe6f2";
                     document.querySelector(".letter").style.display = "block";
@@ -123,7 +122,7 @@
             setTimeout(() => heart.remove(), 5000);
         }
 
-        setInterval(createFloatingHeart, 1000); // Tạo trái tim bay mỗi giây
+        setInterval(createFloatingHeart, 1000);
         window.onload = checkProximity;
         window.onmousemove = checkProximity;
         setInterval(checkProximity, 100);
