@@ -34,7 +34,7 @@
         .heart {
             font-size: 200px;
             display: none;
-            animation: heartbeat 1s infinite, glow 1.5s infinite alternate;
+            animation: heartbeat 1s infinite alternate;
         }
 
         @keyframes heartbeat {
@@ -71,36 +71,36 @@
 
     <script>
         let messageTimeout = null;
-        const messages =["Happy Valentine's Day🥰", "Chúc người con gái tui thương có một ngày Valentine thật hạnh phúc💖"];
+        const messages = ["Happy Valentine's Day🥰", "Chúc người con gái tui thương có một ngày Valentine thật hạnh phúc💖"];
         const messageElement = document.getElementById("message");
-
-        // ⏳ Chỉnh thời gian hiển thị chữ ở đây
-        const abc_duration = 5000; // Thời gian "abc" hiển thị (ms)
-        const transition_duration = 1000; // Thời gian chuyển đổi giữa abc và def (ms)
 
         function showMessages() {
             messageElement.style.opacity = 1;
-            messageElement.innerText = messages[0]; // Hiện chữ "abc"
+            messageElement.innerText = messages[0];
 
             messageTimeout = setTimeout(() => {
                 messageElement.style.opacity = 0;
                 setTimeout(() => {
-                    messageElement.innerText = messages[1]; // Chuyển sang "def"
+                    messageElement.innerText = messages[1];
                     messageElement.style.opacity = 1;
-                }, transition_duration);
-            }, abc_duration);
+                }, 1000);
+            }, 5000);
         }
 
         function checkProximity() {
-            const V_position = localStorage.getItem("V_position");
-            if (V_position) {
-                const distance = window.screenLeft - parseInt(V_position);
-                if (Math.abs(distance) < 150) {
+            const otherTab = "V_position";
+            const currentTab = "K_position";
+
+            const otherTabPosition = localStorage.getItem(otherTab);
+            if (otherTabPosition) {
+                const distance = Math.abs(window.screenX - parseInt(otherTabPosition));
+
+                if (distance < 200) {
                     document.body.style.backgroundColor = "#ffccd5";
                     document.querySelector(".letter").style.display = "none";
                     document.querySelector(".heart").style.display = "block";
 
-                    if (!messageTimeout) showMessages(); // Chỉ chạy một lần
+                    if (!messageTimeout) showMessages();
                 } else {
                     document.body.style.backgroundColor = "#ffe6f2";
                     document.querySelector(".letter").style.display = "block";
@@ -110,7 +110,8 @@
                     messageElement.style.opacity = 0;
                 }
             }
-            localStorage.setItem("K_position", window.screenLeft);
+
+            localStorage.setItem(currentTab, window.screenX);
         }
 
         function createFloatingHeart() {
@@ -123,10 +124,10 @@
             setTimeout(() => heart.remove(), 5000);
         }
 
-        setInterval(createFloatingHeart, 1000); // Tạo trái tim bay mỗi giây
+        setInterval(createFloatingHeart, 1000);
+        setInterval(checkProximity, 500);
         window.onload = checkProximity;
         window.onmousemove = checkProximity;
-        setInterval(checkProximity, 100);
     </script>
 </body>
 </html>
