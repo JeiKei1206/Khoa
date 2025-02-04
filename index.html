@@ -52,45 +52,43 @@
     </style>
 </head>
 <body>
-    <div class="letter" id="letter">K</div>
-    <div class="heart" id="heart">❤️</div>
-    <div class="message" id="message">Happy Valentine's Day</div>
+    <div class="letter">K</div>
+    <div class="heart">❤️</div>
+    <div class="message" id="message">abc</div>
 
     <script>
+        let messageIndex = 0;
         let messageTimeout = null;
-        const messages = ["Happy Valentine's Day", "Chúc người tui thương có một ngày Valentine thật hạnh phúc💖"];
+        const messages = ["abc", "def"];
         const messageElement = document.getElementById("message");
-        const letterElement = document.getElementById("letter");
-        const heartElement = document.getElementById("heart");
 
         function showMessages() {
             messageElement.style.opacity = 1;
-            messageElement.innerText = messages[0];
+            messageElement.innerText = messages[0]; // Hiện chữ "abc"
 
             messageTimeout = setTimeout(() => {
                 messageElement.style.opacity = 0;
                 setTimeout(() => {
-                    messageElement.innerText = messages[1];
+                    messageElement.innerText = messages[1]; // Chuyển sang "def"
                     messageElement.style.opacity = 1;
                 }, 1000);
-            }, 3000);
+            }, 5000);
         }
 
         function checkProximity() {
             const V_position = localStorage.getItem("V_position");
             if (V_position) {
                 const distance = window.screenLeft - parseInt(V_position);
-
                 if (Math.abs(distance) < 150) {
                     document.body.style.backgroundColor = "#ffccd5";
-                    letterElement.style.display = "none";
-                    heartElement.style.display = "block";
+                    document.querySelector(".letter").style.display = "none";
+                    document.querySelector(".heart").style.display = "block";
 
-                    if (!messageTimeout) showMessages();
+                    if (!messageTimeout) showMessages(); // Chỉ chạy một lần
                 } else {
                     document.body.style.backgroundColor = "#ffe6f2";
-                    letterElement.style.display = "block";  // Chữ "K" hiện lại nếu cửa sổ xa nhau
-                    heartElement.style.display = "none";
+                    document.querySelector(".letter").style.display = "block";
+                    document.querySelector(".heart").style.display = "none";
                     clearTimeout(messageTimeout);
                     messageTimeout = null;
                     messageElement.style.opacity = 0;
