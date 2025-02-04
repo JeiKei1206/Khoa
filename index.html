@@ -75,7 +75,7 @@
         const messageElement = document.getElementById("message");
 
         // ⏳ Chỉnh thời gian hiển thị chữ ở đây
-        const abc_duration = 3000; // Thời gian "abc" hiển thị (ms)
+        const abc_duration = 5000; // Thời gian "abc" hiển thị (ms)
         const transition_duration = 1000; // Thời gian chuyển đổi giữa abc và def (ms)
 
         function showMessages() {
@@ -92,9 +92,9 @@
         }
 
         function checkProximity() {
-            const L_position = localStorage.getItem("L_position");
-            if (L_position) {
-                const distance = window.screenLeft - parseInt(L_position);
+            const V_position = localStorage.getItem("V_position");
+            if (V_position) {
+                const distance = window.screenLeft - parseInt(V_position);
                 if (Math.abs(distance) < 150) {
                     document.body.style.backgroundColor = "#ffccd5";
                     document.querySelector(".letter").style.display = "none";
