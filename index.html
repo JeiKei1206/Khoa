@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine - K</title>
+    <title>Khoa</title>
     <style>
         body {
             display: flex;
@@ -92,8 +92,8 @@
         }
 
         function checkProximity() {
-            const K_position = localStorage.getItem("L_position");
-            if (K_position) {
+            const V_position = localStorage.getItem("V_position");
+            if (V_position) {
                 const distance = window.screenLeft - parseInt(L_position);
                 if (Math.abs(distance) < 150) {
                     document.body.style.backgroundColor = "#ffccd5";
