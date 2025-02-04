@@ -49,33 +49,19 @@
             opacity: 0;
             transition: opacity 1s;
         }
-
-        /* Trái tim bay nền */
-        .floating-heart {
-            position: absolute;
-            color: rgba(255, 77, 121, 0.7);
-            font-size: 30px;
-            animation: floatUp 5s infinite;
-        }
-
-        @keyframes floatUp {
-            from { transform: translateY(100vh) scale(0.5); opacity: 1; }
-            to { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
     </style>
 </head>
 <body>
-    <div class="letter">K</div>
-    <div class="heart">❤️</div>
+    <div class="letter" id="letter">K</div>
+    <div class="heart" id="heart">❤️</div>
     <div class="message" id="message">Happy Valentine's Day</div>
 
     <script>
         let messageTimeout = null;
         const messages = ["Happy Valentine's Day", "Chúc người tui thương có một ngày Valentine thật hạnh phúc💖"];
         const messageElement = document.getElementById("message");
-
-        const abc_duration = 5000; // Thời gian "abc" hiển thị (ms)
-        const transition_duration = 1000; // Thời gian chuyển đổi giữa abc và def (ms)
+        const letterElement = document.getElementById("letter");
+        const heartElement = document.getElementById("heart");
 
         function showMessages() {
             messageElement.style.opacity = 1;
@@ -86,24 +72,25 @@
                 setTimeout(() => {
                     messageElement.innerText = messages[1];
                     messageElement.style.opacity = 1;
-                }, transition_duration);
-            }, abc_duration);
+                }, 1000);
+            }, 3000);
         }
 
         function checkProximity() {
             const V_position = localStorage.getItem("V_position");
             if (V_position) {
                 const distance = window.screenLeft - parseInt(V_position);
+
                 if (Math.abs(distance) < 150) {
                     document.body.style.backgroundColor = "#ffccd5";
-                    document.querySelector(".letter").style.display = "none";
-                    document.querySelector(".heart").style.display = "block";
+                    letterElement.style.display = "none";
+                    heartElement.style.display = "block";
 
                     if (!messageTimeout) showMessages();
                 } else {
                     document.body.style.backgroundColor = "#ffe6f2";
-                    document.querySelector(".letter").style.display = "block";
-                    document.querySelector(".heart").style.display = "none";
+                    letterElement.style.display = "block";  // Chữ "K" hiện lại nếu cửa sổ xa nhau
+                    heartElement.style.display = "none";
                     clearTimeout(messageTimeout);
                     messageTimeout = null;
                     messageElement.style.opacity = 0;
@@ -112,17 +99,6 @@
             localStorage.setItem("K_position", window.screenLeft);
         }
 
-        function createFloatingHeart() {
-            const heart = document.createElement("div");
-            heart.innerHTML = "❤️";
-            heart.classList.add("floating-heart");
-            heart.style.left = `${Math.random() * 100}vw`;
-            heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
-        }
-
-        setInterval(createFloatingHeart, 1000);
         window.onload = checkProximity;
         window.onmousemove = checkProximity;
         setInterval(checkProximity, 100);
