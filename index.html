@@ -26,20 +26,10 @@
             animation: glow 1.5s infinite alternate;
         }
 
-        @keyframes glow {
-            from { text-shadow: 0px 0px 10px rgba(255, 77, 121, 0.8); }
-            to { text-shadow: 0px 0px 30px rgba(255, 0, 102, 1); }
-        }
-
         .heart {
             font-size: 200px;
             display: none;
             animation: heartbeat 1s infinite alternate;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
         }
 
         .message {
@@ -89,11 +79,23 @@
 
         function checkProximity() {
             const otherTab = "V_position";
+            const otherTabWidth = localStorage.getItem("V_width");
             const currentTab = "K_position";
 
             const otherTabPosition = localStorage.getItem(otherTab);
-            if (otherTabPosition) {
+
+            if (otherTabPosition && otherTabWidth) {
                 const distance = Math.abs(window.screenX - parseInt(otherTabPosition));
+
+                if (parseInt(otherTabWidth) !== window.innerWidth) {
+                    document.body.style.backgroundColor = "#ffe6f2";
+                    document.querySelector(".letter").style.display = "block";
+                    document.querySelector(".heart").style.display = "none";
+                    clearTimeout(messageTimeout);
+                    messageTimeout = null;
+                    messageElement.style.opacity = 0;
+                    return;
+                }
 
                 if (distance < 200) {
                     document.body.style.backgroundColor = "#ffccd5";
@@ -112,11 +114,11 @@
             }
 
             localStorage.setItem(currentTab, window.screenX);
+            localStorage.setItem("K_width", window.innerWidth);
         }
-
         function createFloatingHeart() {
             const heart = document.createElement("div");
-            heart.innerHTML = "❤️";
+            heart.innerHTML = "💖";
             heart.classList.add("floating-heart");
             heart.style.left = `${Math.random() * 100}vw`;
             heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
@@ -124,10 +126,12 @@
             setTimeout(() => heart.remove(), 5000);
         }
 
-        setInterval(createFloatingHeart, 1000);
+        setInterval(createFloatingHeart, 500);
+
         setInterval(checkProximity, 500);
         window.onload = checkProximity;
         window.onmousemove = checkProximity;
+        window.onresize = checkProximity;
     </script>
 </body>
 </html>
