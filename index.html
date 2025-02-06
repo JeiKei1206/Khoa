@@ -72,7 +72,7 @@
 </head>
 <body>
     <audio id="backgroundMusic" loop autoplay>
-        <source src="/Html/Audio/0206.MP3" type="audio/mp3">
+        <source src="https://github.com/JeiKei1206/Khoa/raw/main/0206.MP3" type="audio/mp3">
         Trình duyệt của bạn không hỗ trợ phát nhạc.
     </audio>
     
@@ -129,7 +129,7 @@
 
                     const specialWord = document.getElementById("specialWord");
                     specialWord.addEventListener("mouseenter", () => {
-                        specialWord.style.transform = "scale(0.5)"; // Phóng to nhẹ
+                        specialWord.style.transform = "scale(1.05)"; // Phóng to nhẹ
                         specialWord.style.fontWeight = "bold";
                     });
 
@@ -146,7 +146,7 @@
         
         
         function showImage() {
-            const imgSrc = "https://github.com/JeiKei1206/Khoa/raw/main/Vien.png"; // Đảm bảo ảnh nằm cùng thư mục với V.html
+            const imgSrc = "https://github.com/JeiKei1206/Khoa/blob/main/Vien.png"; // Đảm bảo ảnh nằm cùng thư mục với V.html
 
             fetch(imgSrc)
                 .then(response => {
